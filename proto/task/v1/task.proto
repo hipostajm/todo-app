@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package task.v1;
+
+option go_package = "proto/task/v1;taskv1";
+
+option java_multiple_files = true;
+option java_package = "com.proto.v1.task";
+option java_outer_classname = "TaskProtos";
+
+service TaskService{
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
+  rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
+
+  rpc CreateTask(CreateTaskReqeust) returns (CreateTaskResponse);
+
+  rpc MarkTaskAsDone(MarkTaskAsDoneRequest) returns (MarkTaskAsDoneResponse);
+
+  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
+}
+
+message GetTaskRequest{
+  string taskId = 1;
+}
+
+message GetTaskResponse{
+  TaskResponse task = 1;
+}
+
+enum Status {
+  Pending = 0;
+  Done = 1;
+}
+
+message TaskResponse{
+  string taskId = 1;
+  string name = 2;
+  string description = 3;
+  string endTime = 4;
+  string startTime = 5;
+  Status status = 6;
+}
+
+message TaskRequest{
+  string name = 2;
+  string description = 3;
+  string endTime = 4;
+}
+
+message GetTasksRequest{
+  string userId = 1;
+}
+
+message GetTasksResponse{
+  repeated TaskRequest task = 1;
+}
+
+message CreateTaskReqeust{
+  TaskRequest task = 1;
+}
+
+message CreateTaskResponse{
+  string taskId = 1;
+}
+
+message MarkTaskAsDoneRequest{
+  string taskId = 1;
+}
+
+message MarkTaskAsDoneResponse{}
+
+message DeleteTaskRequest{
+  string taskId = 1;
+}
+
+message DeleteTaskResponse{}
